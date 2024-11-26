@@ -11,6 +11,15 @@ gleam test  # Run the tests
 gleam shell # Run an Erlang shell
 ```
 
+```sh
+# from OpenSSL suite:
+$ ./generate-keys.sh
+$ gleam run
+# > Listening on port: 41145
+# copy port number, e.g. 41145
+$ openssl s_client -connect localhost:41145
+```
+
 ## Installation
 
 If available on Hex this package can be added to your Gleam project:
