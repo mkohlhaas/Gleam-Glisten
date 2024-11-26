@@ -19,7 +19,8 @@ Further documentation can be found at <https://hexdocs.pm/low_level>.
 ## Development
 
 ```sh
-gleam run   # Run the project
-gleam test  # Run the tests
-gleam shell # Run an Erlang shell
+gleam run                                       # Run the project
+openssl s_client -connect localhost:8000        # telnet won't work, so using openssl s_client
+gleam test                                      # Run the tests
+gleam shell                                     # Run an Erlang shell
 ```

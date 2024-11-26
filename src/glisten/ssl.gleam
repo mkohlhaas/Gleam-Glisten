@@ -5,7 +5,7 @@ import gleam/erlang/atom.{type Atom}
 import gleam/erlang/process.{type Pid}
 import gleam/list
 import glisten/socket.{type ListenSocket, type Socket, type SocketReason}
-import glisten/socket/options
+import glisten/socket/options.{type TcpOption}
 
 @external(erlang, "glisten_ssl_ffi", "controlling_process")
 pub fn controlling_process(socket: Socket, pid: Pid) -> Result(Nil, Atom)
@@ -13,7 +13,7 @@ pub fn controlling_process(socket: Socket, pid: Pid) -> Result(Nil, Atom)
 @external(erlang, "ssl", "listen")
 fn do_listen(
   port: Int,
-  options: List(options.TcpOption),
+  options: List(TcpOption),
 ) -> Result(ListenSocket, SocketReason)
 
 @external(erlang, "ssl", "transport_accept")
@@ -53,10 +53,7 @@ pub fn shutdown(socket: Socket) -> Result(Nil, SocketReason) {
 fn do_set_opts(socket: Socket, opts: List(Dynamic)) -> Result(Nil, Nil)
 
 /// Update the optons for a socket (mutates the socket)
-pub fn set_opts(
-  socket: Socket,
-  opts: List(options.TcpOption),
-) -> Result(Nil, Nil) {
+pub fn set_opts(socket: Socket, opts: List(TcpOption)) -> Result(Nil, Nil) {
   opts
   |> options.to_dict
   |> dict.to_list
@@ -70,7 +67,7 @@ pub fn handshake(socket: Socket) -> Result(Socket, Nil)
 /// Start listening over SSL on a port with the given options
 pub fn listen(
   port: Int,
-  options: List(options.TcpOption),
+  options: List(TcpOption),
 ) -> Result(ListenSocket, SocketReason) {
   options
   |> options.merge_with_defaults
